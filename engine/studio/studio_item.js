@@ -18,8 +18,13 @@ var StudioItem = {
         this.onHide();
         $("#" + this.name).html("<div class='inside'><div id='" + this.name + "-inside'></div></div>");
         Nav.createFloatingBar(this.name);
+        this.subinit();
         this._displayCards();
         AutoZoom.autozoom(this.name + "-inside", this._itemWidth, this._itemHeight);
+    },
+    
+    subinit: function() {
+        // Nothing
     },
 
     _displayCards: function()
