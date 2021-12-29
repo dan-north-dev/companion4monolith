@@ -25,6 +25,7 @@
         "general/menu.js",
         "general/nav.js",
         "general/autozoom.js",
+        "general/sw-register.js",
         "about/about.js",
         "about/lang/about.LANGUAGE.js",
         "tutorial/tutorial.js",

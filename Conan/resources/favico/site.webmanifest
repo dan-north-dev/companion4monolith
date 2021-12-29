@@ -31,5 +31,7 @@
     "theme_color": "#542f23",
     "background_color": "#542f23",
     "display": "standalone",
-    "android_package_name": "com.github.rafdulaf.companion4monolith.conan"
+    "android_package_name": "com.github.rafdulaf.companion4monolith.conan",
+    "start_url": "/Maps3/Conan/index.html",
+    "id": "com.github.rafdulaf.companion4monolith.conan"
 }
