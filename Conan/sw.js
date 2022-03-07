@@ -1,7 +1,8 @@
+console.log(document.location.href)
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open('Companion').then((cache) => cache.addAll([
-      '/Maps3/Conan/index.html',
+      '/Companion/Conan/index.html',
     ])),
   );
 });
