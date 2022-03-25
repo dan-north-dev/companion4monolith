@@ -1,8 +1,19 @@
 if ('serviceWorker' in navigator) 
 {
-  navigator.serviceWorker.register('sw.js?aVersion=' + Version, { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
-                         .then(() => 
+  navigator.serviceWorker.register('sw.js?Version=' + Version, { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
+                         .then(registration => 
      { 
+        registration.addEventListener("updatefound",
+            () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener("statechange", () => {
+                      console.log(
+                        "App: Nouvel état :",
+                        newWorker.state
+                      );
+                });
+            }
+        );
         console.log('Service Worker Registered'); 
      });
 }

@@ -1,4 +1,4 @@
-console.log(document.location.href)
+console.log(self.Version)
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open('Companion').then((cache) => cache.addAll([
