@@ -1,9 +1,9 @@
 if ('serviceWorker' in navigator) 
 {
-  navigator.serviceWorker.register('sw.js?Version=' + Version, { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
+  navigator.serviceWorker.register('../sw.js?Version=' + Version, { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
                          .then(registration => 
      { 
-        registration.addEventListener("updatefound",
+        /*registration.addEventListener("updatefound",
             () => {
                 const newWorker = registration.installing;
                 newWorker.addEventListener("statechange", () => {
@@ -13,9 +13,18 @@ if ('serviceWorker' in navigator)
                       );
                 });
             }
-        );
+        );*/
+        
         console.log('Service Worker Registered'); 
-     });
+     }
+  );
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    console.log('Starting service worker');
+    navigator.serviceWorker.controller.postMessage({
+      type: 'START',
+    });  
+  })
+
 }
 /*
 let deferredPrompt;
