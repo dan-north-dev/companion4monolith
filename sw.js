@@ -3,26 +3,34 @@ const Version = self.serviceWorker.scriptURL.match(/^.*?Version=([0-9.]*)$/)[1];
 const CACHE_NAME = 'Companion-' + Application + '-' + Version;
 
 const urlsToCache = [
-  Application + '/',
+  Application + '/index.html',
   'engine/vendors/js/jquery-3.1.1.js',
   'engine/general/errors.1.js',
   'engine/general/utils.0.21.js'
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-        caches.open(CACHE_NAME)
-              .then(function(cache) {
-        console.log('Filling cache ' + CACHE_NAME);
-        return cache.addAll(urlsToCache);
-  }));
+  e.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    console.log('Initial filling cache ' + CACHE_NAME);
+    await cache.addAll(urlsToCache);
+  })());  
 });
 
 self.addEventListener('fetch', (e) => {
-  console.log(e.request.url);
-  e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request)),
-  );
+  e.respondWith((async () => {
+    const r = await caches.match(e.request);
+    console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+    if (r) return r;
+    const response = await fetch(e.request);
+    const cache = await caches.open(CACHE_NAME);
+    if (e.request.method !== "POST")
+    {
+        console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+        cache.put(e.request, response.clone());
+    }
+    return response;
+  })());
 });
 
 /*self.addEventListener('message', (event) => {

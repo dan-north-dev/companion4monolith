@@ -1,8 +1,10 @@
 if ('serviceWorker' in navigator) 
 {
-  navigator.serviceWorker.register('../sw.js?Version=' + Version, { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
-                         .then(registration => 
-     { 
+  navigator
+    .serviceWorker
+    .register('../sw.js?Version=' + Version, 
+                                    { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
+    .then(registration =>{ 
         /*registration.addEventListener("updatefound",
             () => {
                 const newWorker = registration.installing;
