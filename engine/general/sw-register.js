@@ -2,8 +2,8 @@ if ('serviceWorker' in navigator)
 {
   navigator
     .serviceWorker
-    .register('../sw.js?Version=' + Version, 
-                                    { scope: document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
+    .register('../sw.js?Version=' + Version + '&Application=' + Application, 
+                                    { scope: ".."})//document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1)})
     .then(registration =>{ 
         /*registration.addEventListener("updatefound",
             () => {
@@ -20,12 +20,12 @@ if ('serviceWorker' in navigator)
         console.log('Service Worker Registered'); 
      }
   );
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
+  /*navigator.serviceWorker.addEventListener('controllerchange', () => {
     console.log('Starting service worker');
     navigator.serviceWorker.controller.postMessage({
       type: 'START',
     });  
-  })
+  })*/
 
 }
 /*

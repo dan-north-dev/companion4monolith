@@ -116,14 +116,28 @@ Utils = {
         });
         
         // Load JS files
-        commonFiles.scripts.forEach(function(file) {
-            $('head').append( $('<script/>').attr('src', '../engine/' + file.replace('LANGUAGE', Language) + "?version=" + Version) );
-        });
+        for (let i = 0; i < commonFiles.scripts.length; i++)
+        {
+            const file = commonFiles.scripts[i];
+            await $.ajax({
+                  dataType: "script",
+                  cache: true,
+                  crossDomain:true,
+                  url: '../engine/' + file.replace('LANGUAGE', Language) + "?version=" + Version
+                })
+        }
 
-        applicationFiles.scripts.forEach(function(file) {
-            $('head').append( $('<script/>').attr('src', file.replace('LANGUAGE', Language) + "?version=" + Version) );
-        });
-        
+        for (let i = 0; i < applicationFiles.scripts.length; i++)
+        {
+            const file = applicationFiles.scripts[i];
+            await $.ajax({
+                  dataType: "script",
+                  cache: true,
+                  crossDomain:true,
+                  url: file.replace('LANGUAGE', Language) + "?version=" + Version
+                })
+        }
+
         if (navigator.userAgent.indexOf('Firefox') != -1)
         {
             $(document.body).addClass('ff');
