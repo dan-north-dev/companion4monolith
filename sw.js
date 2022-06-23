@@ -9,7 +9,7 @@ const urlsToCache = [
   Application + '/index.html',
   'engine/vendors/js/jquery-3.1.1.js',
   'engine/general/errors.1.js',
-  'engine/general/utils.0.21.js'
+  'engine/general/utils.0.24.js'
 ];
 
 self.addEventListener('install', (e) => {
@@ -24,7 +24,28 @@ self.addEventListener('install', (e) => {
 // Fetching content using Service Worker
 self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
-        if (e.request.method !== "POST" && e.request.url.startsWith(self.registration.scope))
+        if (e.request.url.includes("/engine/Version.json?foo="))
+        {
+            try
+            {
+                const response = await fetch(e.request);
+                const serverVersion = await response.clone().json(); 
+                if (serverVersion.version != Version)
+                {
+                    // New version released
+                    console.log("A new version is available...")
+                    // TODO
+                }
+                return response;
+            }
+            catch (e)
+            {
+                console.log("Working offline");
+                return new Response(JSON.stringify({version: Version}), {headers: {'Content-Type': 'application/json'}});
+            }
+            
+        }
+        else if (e.request.method !== "POST" && e.request.url.startsWith(self.registration.scope))
     	{
             const cachedResponse = await caches.match(e.request);
             if (cachedResponse) 
