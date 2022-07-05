@@ -9,7 +9,8 @@ const urlsToCache = [
   Application + '/index.html',
   'engine/vendors/js/jquery-3.1.1.js',
   'engine/general/errors.1.js',
-  'engine/general/utils.0.24.js'
+  'engine/general/utils.0.24.js',
+  'Conan/data/rules/books/heroes/fr/1/img/1.webp'
 ];
 
 self.addEventListener('install', (e) => {

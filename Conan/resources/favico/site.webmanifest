@@ -17,8 +17,8 @@
     "background_color": "#542f23",
     "display": "standalone",
     "android_package_name": "com.github.rafdulaf.companion4monolith.conan",
-    "start_url": "../../index.html",
-    "scope": "../..",
+    "start_url": "/Companion/Conan/index.html",
+    "scope": "/Companion/Conan",
     "prefer_related_applications": true,
     "id": "com.github.rafdulaf.companion4monolith.conan"
 }
