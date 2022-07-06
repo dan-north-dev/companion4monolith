@@ -1,11 +1,13 @@
 #!/bin/sh
+start=`date +%s`
+
 FILES="*.pdf"
 for f in $FILES
 do
 	echo "Processing $f file..."
 	TARGET="output/${f%.*}"
 	TARGETIMAGES="$TARGET/pages"
-	TARGETPREVIEW="$TARGET/preview"
+	TARGETPREVIEW="$TARGET/thumbnails"
 	rm -rf $TARGET
 	mkdir -p $TARGETIMAGES
 	mkdir -p $TARGETPREVIEW
@@ -24,10 +26,12 @@ do
 	pdftotext -raw -enc UTF-8 "$f" "$TARGET/text.txt"
 	# ^[0-9]+$ to remove page number... an option with pixel layout also exists but requires to know pdf size
 	sed -i -r 's/"/\"/g; s/^[0-9]+$//g;' "$TARGET/text.txt"
-	cat "$TARGET/text.txt" | tr '\n' '\r' > "$TARGET/text2.txt"
+	cat "$TARGET/text.txt" | tr '\n' '\r' > "$TARGET/search.json"
 	rm "$TARGET/text.txt"
-	mv "$TARGET/text2.txt" "$TARGET/text.txt"
-	sed -i -r 's/[ \r]*\f/","/g; s/[\t\r]/ /g; s/[ ]+/ /g; s/^/["/g; s/","$/"]/g' "$TARGET/text.txt"
+	sed -i -r 's/[ \r]*\f/","/g; s/[\t\r]/ /g; s/[ ]+/ /g; s/^/["/g; s/","$/"]/g' "$TARGET/search.json"
 
 done
-echo "Done"
+
+end=`date +%s`
+runtime=$((end-start))
+echo "Done in ${runtime}s"
